@@ -1,9 +1,8 @@
 import numpy as np
 class understand:
-    def __init__(self, s_vec_size, i_vec_size):
-        self.max_size = max(s_vec_size, i_vec_size)
-        self.s_vec = np.zeros(self.max_size)
-        self.i_vec = np.zeros(self.max_size)
+    def __init__(self):
+        #self.max_size = max(s_vec_size, i_vec_size)
+
         try:
             self.vector_space = np.load('imageText_vector.npz')['space']
             self.maxs = self.vector_space.shape
@@ -47,3 +46,9 @@ class understand:
 
     def saveSpace(self):
         np.savez_compressed('imageText_vector.npz', space=self.vector_space)
+
+def cos_sim_matrix(v1, v2):
+    d = v1 @ v2.T
+    norm1 = (v1*v1).sum(0, keepdims=True) **.5
+    norm2 = (v2*v2).sum(0, keepdims=True) **.5
+    return d/(norm1 * norm2)
