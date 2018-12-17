@@ -3,6 +3,17 @@ import chainer
 import chainer.links as L
 import chainer.functions as F
 
+from bertChainer import modeling
+class ImNet(Chain):
+    def __init__(self):
+        super(ImNet, self).__init__()
+        with self.init_scope():
+            self.bert = modeling.BertModel(255)
+            self.vgg = VGG13()
+    
+    def __call__(self, x):
+        return self.bert(self.vgg(x))
+
 class VGG13(Chain):
     def __init__(self):
         super(VGG13, self).__init__()
