@@ -1,3 +1,4 @@
+import numpy as np
 class DataMaker:
     def __init__(self):
         import os
@@ -16,14 +17,22 @@ class DataMaker:
                 else:
                     break
 
-                if len(video)%30==0:
-                    yield video[i:i+30]
+                if len(video)%3==0:
+                    yield np.array(video[i:i+3])
                     i+=1
             cap.release()
 
     def soundData(self):
         for name in self.file_names:
             from pydub import AudioSegment
-            self.sound = AudioSegment.from_file('./datas/'+name, "mp4")
-            for i in range(0, len(self.sound)-1000, 1000):
-                yield self.sound[i:i+1000]
+            sound = AudioSegment.from_file('./datas/'+name, "mp4").get_array_of_samples()
+            sound = np.array(sound)
+            for i in range(0, len(sound)-100, 100):
+                yield sound[i:i+100]
+
+'''
+これで使う
+DM = DataMaker()
+for video in DM.videoData():
+for sound in DM.soundData():
+'''
