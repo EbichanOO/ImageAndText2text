@@ -3,16 +3,24 @@ import chainer
 import chainer.links as L
 import chainer.functions as F
 
-from bertChainer import modeling
+from bertChainer.modeling import BertModel, BertConfig
 class ImNet(Chain):
     def __init__(self):
         super(ImNet, self).__init__()
+        config = BertConfig(vocab_size=32000, hidden_size=600, num_hidden_layers=8, num_attention_heads=100, intermediate_size=1024)
         with self.init_scope():
-            self.bert = modeling.BertModel(255)
+            self.bert = BertModel(config=config)
             self.vgg = VGG13()
     
     def __call__(self, x):
         return self.bert(self.vgg(x))
+
+def configMaker():
+    import json
+    Bconfig = BertConfig(vocab_size=255)
+    config_json = Bconfig.to_json_string()
+    with open('bert_config.json', 'w') as fw:
+        json.dump(config_json, fw)
 
 class VGG13(Chain):
     def __init__(self):
@@ -46,3 +54,4 @@ class VGG13(Chain):
         out = F.relu(self.conv5_2(out))
         out = F.relu(self.conv5_2(out))
         return F.dropout(F.relu(self.fc6(out)))
+
