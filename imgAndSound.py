@@ -15,10 +15,10 @@ def run(epoch=100):
     so_model.to_cpu()
     opt.setup(so_model)
 
-    import core_utils
     from data_maker import DataMaker
     DTMK = DataMaker()
     sound_iter = DTMK.soundData()
+
     for video in DTMK.videoData():
         image = video
         try:
