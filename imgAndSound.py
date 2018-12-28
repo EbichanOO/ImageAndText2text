@@ -5,7 +5,7 @@ def run(epoch=100):
     opt = chainer.optimizers.Adam()
     minibatch_size = 10
 
-    from VGG import ImNet
+    from imageNet import ImNet
     im_model = ImNet()
     im_model.to_cpu()
     opt.setup(im_model)
