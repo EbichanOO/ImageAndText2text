@@ -36,7 +36,7 @@ class VGG13(Chain):
             self.conv4_2 = L.Convolution2D(512, 512, 3, 1, 1)
             self.conv5_1 = L.Convolution2D(512, 512, 3, 1, 1)
             self.conv5_2 = L.Convolution2D(512, 512, 3, 1, 1)
-            self.fc6 = L.Linear(512*7*7, 4096)
+            self.fc6 = L.Linear(73728, 4096)
             #self.fc6 = L.Linear(1843200, 4096)
     
     def __call__(self, x):

@@ -22,7 +22,6 @@ def run(epoch=100):
 
     for video in DTMK.videoData():
         image = video
-        print(image.shape)
         try:
             sound = sound_iter.next()
         except:

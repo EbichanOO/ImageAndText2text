@@ -1,4 +1,5 @@
 import numpy as np
+from PIL import Image
 class DataMaker:
     def __init__(self):
         import os
@@ -13,8 +14,9 @@ class DataMaker:
             while(cap.isOpened()):
                 ret, frame = cap.read()
                 if ret:
-                    tmp = np.array(frame)
-                    video.append(tmp.T)
+                    img = cv2.resize(frame, (256, 144))
+                    img = np.array(img, dtype=np.float32)
+                    video.append(img.T)
                 else:
                     break
 
