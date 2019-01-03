@@ -1,5 +1,6 @@
 import chainer
 import numpy as np
+from util import cos_sim_matrix
 
 def run(epoch=100):
     opt = chainer.optimizers.Adam()
@@ -21,6 +22,7 @@ def run(epoch=100):
 
     for video in DTMK.videoData():
         image = video
+        print(image.shape)
         try:
             sound = sound_iter.next()
         except:
@@ -29,9 +31,9 @@ def run(epoch=100):
         outV = im_model(image)
         outS = so_model(sound)
 
-        cos = core_utils.cos_sim_matrix(outV, outS)
+        cos = cos_sim_matrix(outV, outS)
         loss = chainer.functions.mean_squared_error(1, cos)
-        print("loss = {loss}")
+        print("loss = {}".format(loss))
 
         im_model.cleargrads()
         so_model.cleargrads()

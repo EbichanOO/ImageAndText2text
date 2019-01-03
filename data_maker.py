@@ -13,12 +13,13 @@ class DataMaker:
             while(cap.isOpened()):
                 ret, frame = cap.read()
                 if ret:
-                    video.append(frame)
+                    tmp = np.array(frame)
+                    video.append(tmp.T)
                 else:
                     break
 
                 if len(video)%3==0:
-                    yield np.array(video[i:i+3])
+                    yield np.array(video[i:i+3], dtype=np.float32)
                     i+=1
             cap.release()
 
@@ -26,7 +27,7 @@ class DataMaker:
         for name in self.file_names:
             from pydub import AudioSegment
             sound = AudioSegment.from_file('./datas/'+name, "mp4").get_array_of_samples()
-            sound = np.array(sound)
+            sound = np.array(sound, dtype=np.float32)
             for i in range(0, len(sound)-100, 100):
                 yield sound[i:i+100]
 
